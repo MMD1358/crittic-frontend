@@ -1,0 +1,87 @@
+<div class="page">
+  <app-header></app-header>
+
+    <main class="register-main">
+        <section class="register-box">
+            <h2 class="register-title">
+                WELCOME TO<br>
+                CRITTIC
+            </h2>
+
+            <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
+                <input class="register-input" type="email" placeholder="Email" formControlName="email">
+
+                <p class="form-error" *ngIf="hasError('email', 'required')">
+                    Email is required.
+                </p>
+
+                <p class="form-error" *ngIf="hasError('email', 'email')">
+                    Enter a valid email.
+                </p>
+
+                <input class="register-input" type="text" placeholder="Username" formControlName="username">
+
+                <p class="helper-text">5 to 20 Characters</p>
+
+                <p class="form-error" *ngIf="hasError('username', 'required')">
+                    Username is required.
+                </p>
+
+                <p class="form-error" *ngIf="hasError('username', 'minlength') || hasError('username', 'maxlength')">
+                    Username must have 5 to 20 characters.
+                </p>
+
+                <input class="register-input" type="password" placeholder="Password" formControlName="password">
+
+                <p class="helper-text">5 to 20 Characters</p>
+
+                <p class="form-error" *ngIf="hasError('password', 'required')">
+                    Password is required.
+                </p>
+
+                <p class="form-error" *ngIf="hasError('password', 'minlength') || hasError('password', 'maxlength')">
+                    Password must have 5 to 20 characters.
+                </p>
+
+                <input class="register-input" type="password" placeholder="Confirm password"
+                    formControlName="confirmPassword">
+
+                <p class="form-error" *ngIf="registerForm.touched && registerForm.hasError('passwordsDoNotMatch')">
+                    Passwords do not match.
+                </p>
+
+                <label class="terms">
+                    <span>I accept the Terms of Service and Privacy Policy:</span>
+                    <input type="checkbox" formControlName="terms">
+                </label>
+
+                <p class="form-error" *ngIf="hasError('terms', 'required')">
+                    You must accept the terms.
+                </p>
+
+                <button class="register-button" type="submit" [disabled]="loading">
+                    {{ loading ? 'WAIT' : 'REGISTER' }}
+                </button>
+
+                <button class="gmail-button" type="button">
+                    <span>Register with gmail</span>
+                    <strong>G</strong>
+                </button>
+
+                <p class="success-message" *ngIf="successMessage">
+                    {{ successMessage }}
+                </p>
+
+                <p class="form-error api-error" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </p>
+
+                <div class="register-links">
+                    <a routerLink="/login">Login</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,173 @@
+header {
+  height: 105px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-mark {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+
+  border: 2px solid white;
+  padding: 3px;
+  background: white;
+}
+
+.brand h1 {
+  font-size: 42px;
+  letter-spacing: 4px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-btn {
+  border: none;
+  background: transparent;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-btn:hover {
+  opacity: 0.75;
+}
+
+.search {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+.search input {
+  width: 195px;
+  border: 0;
+  border-bottom: 2px solid white;
+  background: transparent;
+  color: white;
+  outline: none;
+  padding: 3px 8px 5px;
+}
+
+.search input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.search-results {
+  position: absolute;
+  top: 32px;
+  left: 0;
+
+  width: 240px;
+  max-height: 260px;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  background: rgba(12, 10, 55, 0.95);
+  border: 2px solid white;
+  border-radius: 8px;
+
+  z-index: 1000;
+}
+
+.search-result {
+  width: 100%;
+  padding: 10px 12px;
+
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+
+  background: transparent;
+  color: white;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.no-results {
+  padding: 10px 12px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+}
+
+.btn {
+  width: 98px;
+  height: 27px;
+  border: 2px solid white;
+  border-radius: 7px;
+  color: white;
+  background: linear-gradient(
+    180deg,
+    #ffbd2f 0%,
+    #ff4ac3 100%
+  );
+  cursor: pointer;
+}
+
+.message-btn {
+  width: 52px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  border: 2px solid white;
+  border-radius: 7px;
+
+  background: linear-gradient(
+    180deg,
+    #ffbd2f 0%,
+    #ff4ac3 100%
+  );
+
+  color: white;
+  cursor: pointer;
+}
+
+.message-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.message-alert {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  color: white;
+}
+
+.username-btn {
+  min-width: 150px;
+  width: auto;
+  padding: 0 14px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+}
+
+.logout-btn {
+  width: 105px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+}

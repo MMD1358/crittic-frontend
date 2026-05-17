@@ -1,0 +1,46 @@
+<header>
+  <div class="brand">
+    <img src="../../../assets/logo.png" alt="CRITTIC logo" class="logo-mark">
+    <h1>CRITTIC</h1>
+  </div>
+
+  <nav>
+    <button class="nav-btn" routerLink="/">Home</button>
+    <button class="nav-btn" routerLink="/juegos">Games</button>
+
+    <div class="search">
+      <input type="text" placeholder="Search" [(ngModel)]="searchText" (input)="onSearchChange()"
+        (focus)="showResults = searchResults.length > 0" />
+
+      <div class="search-results" *ngIf="showResults">
+        <button type="button" class="search-result" *ngFor="let game of searchResults" (click)="goToGame(game)">
+          {{ game.title }}
+        </button>
+
+        <p class="no-results" *ngIf="searchResults.length === 0">
+          No games found.
+        </p>
+      </div>
+    </div>
+
+    <ng-container *ngIf="loggedIn$ | async; else guestHeader">
+      <button class="message-btn" type="button" routerLink="/chats">
+        <span class="message-icon">💬</span>
+        <span class="message-alert" *ngIf="hasNewMessages">!</span>
+      </button>
+
+      <button class="btn username-btn" *ngIf="username$ | async as username" [routerLink]="['/perfil', username]">
+        {{ username }}
+      </button>
+
+      <button class="btn logout-btn" type="button" (click)="logout()">
+        Logout
+      </button>
+    </ng-container>
+
+    <ng-template #guestHeader>
+      <button class="btn" routerLink="/registro">Register</button>
+      <button class="btn" routerLink="/login">Access</button>
+    </ng-template>
+  </nav>
+</header>

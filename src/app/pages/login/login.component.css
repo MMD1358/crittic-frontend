@@ -1,0 +1,176 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 10, 30, 0.20) 0%,
+      rgba(7, 12, 40, 0.70) 25%,
+      #070b2f 42%,
+      #070b2f 100%
+    ),
+    url('../../../assets/background.png');
+
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #070b2f;
+
+  color: white;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.login-main {
+  flex: 1;
+  padding: 15px 36px 80px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.login-box {
+  width: 390px;
+  margin-top: 5px;
+}
+
+.login-title {
+  margin-bottom: 12px;
+
+  text-align: center;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 32px;
+  line-height: 0.8;
+  letter-spacing: 2px;
+
+  color: white;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-input {
+  width: 390px;
+  height: 35px;
+
+  margin-bottom: 8px;
+  padding: 0 18px;
+
+  border: 2px solid white;
+  border-radius: 10px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+}
+
+.login-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.remember {
+  width: 390px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 6px 0 14px;
+
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.remember input {
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+}
+
+.login-button {
+  width: 170px;
+  height: 41px;
+
+  margin-bottom: 13px;
+
+  border: 2px solid white;
+  border-radius: 6px;
+
+  background: linear-gradient(
+    180deg,
+    #ffbd2f 0%,
+    #ff4ac3 100%
+  );
+
+  color: white;
+
+  font-family: "Courier New", monospace;
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.login-links {
+  width: 390px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  font-size: 14px;
+}
+
+.login-links a {
+  color: rgba(255, 255, 255, 0.42);
+  text-decoration: underline;
+}
+
+.login-links a:hover {
+  color: white;
+}
+
+.form-error {
+  width: 390px;
+  margin-top: -4px;
+  margin-bottom: 8px;
+
+  color: #ffb6d9;
+  font-size: 13px;
+}
+
+.api-error {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

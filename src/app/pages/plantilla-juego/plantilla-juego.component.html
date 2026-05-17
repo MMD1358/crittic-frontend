@@ -1,0 +1,198 @@
+<div class="page">
+  <app-header></app-header>
+
+  <main class="game-main">
+    <section class="game-hero" *ngIf="game">
+      <div class="cover-area">
+        <img class="game-cover" [src]="getCoverUrl()" [alt]="game.title">
+
+        <div class="your-rate">
+          <span>Your rate:</span>
+
+          <div class="rating-stars">
+            <button type="button" *ngFor="let star of [1, 2, 3, 4, 5]" class="star-button"
+              [class.active]="star <= (hoverRating || userRating)" (mouseenter)="hoverRating = star"
+              (mouseleave)="hoverRating = 0" (click)="rateGame(star)">
+              ★
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <div class="game-title-row">
+          <h2>{{ game.title }}</h2>
+
+          <div class="average">
+            <span>Average ({{ game.averageRating || 0 }} ★)</span>
+          </div>
+        </div>
+
+        <div class="description-card">
+          {{ game.description }}
+        </div>
+
+        <div class="game-meta">
+          <div class="meta-card">
+            <span>Genre:</span>
+            <strong>{{ game.genre }}</strong>
+          </div>
+
+          <div class="meta-card">
+            <span>Author:</span>
+            <strong>{{ game.authorName }}</strong>
+          </div>
+
+          <div class="meta-card like-game-card">
+            <button type="button" class="heart-button" [class.liked]="game.likedByCurrentUser" (click)="toggleLike()">
+              ♥
+            </button>
+
+            <span>Likes: {{ game.likesCount || 0 }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews-section">
+      <div class="reviews-title">
+        <span></span>
+        <h3>Reviews</h3>
+        <span></span>
+      </div>
+
+      <form class="write-review" (ngSubmit)="submitReview()" *ngIf="game">
+        <textarea [(ngModel)]="newReviewContent" name="newReviewContent" placeholder="Write your review..."></textarea>
+
+        <button type="submit" class="small-gradient-btn">
+          POST REVIEW
+        </button>
+      </form>
+
+      <p class="no-reviews" *ngIf="reviews.length === 0">
+        There are no reviews yet.
+      </p>
+
+      <article class="review-card" *ngFor="let review of reviews">
+        <a class="review-avatar-link" [routerLink]="['/perfil', review.username]">
+          <img class="review-avatar" [src]="getUserImageUrl(review)" [alt]="review.username">
+        </a>
+
+        <div class="review-content">
+          <div class="review-header">
+            <div class="review-user">
+              <a class="username user-profile-link" [routerLink]="['/perfil', review.username]">
+                &#64;{{ review.username }}
+              </a>
+              <span class="dot">•</span>
+              <span class="date">{{ formatDateTime(review.createdAt) }}</span>
+            </div>
+
+            <div class="review-actions">
+              <button type="button" class="review-like-btn" [class.liked]="review.likedByCurrentUser"
+                (click)="toggleReviewLike(review)">
+                ♥
+              </button>
+
+              <span>Likes: {{ review.likesCount || 0 }}</span>
+
+              <span class="answer-icon">💬</span>
+              <span>Answers: {{ review.answersCount || 0 }}</span>
+            </div>
+          </div>
+
+          <div class="review-stars">
+            {{ getStars(review.rating) }}
+          </div>
+
+          <div *ngIf="!review.editing">
+            <p class="review-text">
+              {{ review.content }}
+            </p>
+
+            <button *ngIf="canEditReview(review)" type="button" class="small-gradient-btn edit-btn"
+              (click)="startEditReview(review)">
+              Edit
+            </button>
+          </div>
+
+          <div class="edit-review-box" *ngIf="review.editing">
+            <textarea [(ngModel)]="review.editedContent" name="edit-{{ review.reviewId }}"></textarea>
+
+            <div class="edit-actions">
+              <button type="button" class="small-gradient-btn" (click)="saveEditReview(review)">
+                Save
+              </button>
+
+              <button type="button" class="small-gradient-btn" (click)="cancelEditReview(review)">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <form class="answer-form" (ngSubmit)="submitAnswer(review)">
+            <input type="text" [(ngModel)]="review.newAnswer" name="answer-{{ review.reviewId }}"
+              placeholder="Write an answer...">
+
+            <button type="submit" class="small-gradient-btn">
+              Reply
+            </button>
+          </form>
+
+          <div class="answers-list" *ngIf="review.comments && review.comments.length > 0">
+            <div class="answer-card" *ngFor="let comment of review.comments">
+              <div class="answer-header">
+                <div class="answer-user">
+                  <a class="answer-avatar-link" [routerLink]="['/perfil', comment.username]">
+                    <img class="answer-avatar" [src]="getCommentUserImageUrl(comment)" [alt]="comment.username">
+                  </a>
+
+                  <a class="username user-profile-link" [routerLink]="['/perfil', comment.username]">
+                    &#64;{{ comment.username }}
+                  </a>
+
+                  <span class="dot">•</span>
+                  <span class="date">{{ formatDateTime(comment.createdAt) }}</span>
+                </div>
+
+                <div class="answer-actions">
+                  <button type="button" class="review-like-btn" [class.liked]="comment.likedByCurrentUser"
+                    (click)="toggleCommentLike(comment)">
+                    ♥
+                  </button>
+
+                  <span>Likes: {{ comment.likesCount || 0 }}</span>
+                </div>
+              </div>
+
+              <div *ngIf="!comment.editing">
+                <p>{{ comment.content }}</p>
+
+                <button *ngIf="canEditComment(comment)" type="button" class="small-gradient-btn edit-btn"
+                  (click)="startEditComment(comment)">
+                  Edit
+                </button>
+              </div>
+
+              <div class="edit-review-box" *ngIf="comment.editing">
+                <textarea [(ngModel)]="comment.editedContent" name="edit-comment-{{ comment.commentId }}"></textarea>
+
+                <div class="edit-actions">
+                  <button type="button" class="small-gradient-btn" (click)="saveEditComment(comment)">
+                    Save
+                  </button>
+
+                  <button type="button" class="small-gradient-btn" (click)="cancelEditComment(comment)">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <app-footer></app-footer>
+</div>

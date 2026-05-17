@@ -1,0 +1,551 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(180deg,
+      rgba(5, 10, 30, 0.30) 0%,
+      rgba(7, 12, 40, 0.75) 22%,
+      #070b2f 42%,
+      #070b2f 100%),
+    url('../../../assets/background.png');
+
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #070b2f;
+
+  color: white;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.game-main {
+  flex: 1;
+  padding: 20px 42px 80px;
+}
+
+.game-hero {
+  display: grid;
+  grid-template-columns: 215px 1fr;
+  column-gap: 34px;
+  align-items: start;
+}
+
+.cover-area {
+  width: 215px;
+}
+
+.game-cover {
+  width: 215px;
+  height: 320px;
+
+  padding: 3px;
+  border: 2px solid white;
+  border-radius: 12px;
+
+  background: white;
+  object-fit: cover;
+  display: block;
+
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+.your-rate {
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 24px;
+}
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star-button {
+  border: none;
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 32px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.star-button.active {
+  color: white;
+}
+
+.star-button:hover {
+  transform: scale(1.1);
+}
+
+.game-info {
+  padding-top: 95px;
+}
+
+.game-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.game-title-row h2 {
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.average {
+  margin-left: 55px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 24px;
+}
+
+.description-card {
+  margin-top: 8px;
+  width: 100%;
+
+  background: rgba(45, 49, 93, 0.72);
+  padding: 14px 12px;
+
+  line-height: 1.85;
+  font-size: 14px;
+}
+
+.game-meta {
+  margin-top: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-card {
+  min-height: 35px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 12px;
+
+  background: rgba(45, 49, 93, 0.72);
+  font-size: 14px;
+}
+
+.like-game-card {
+  min-width: 170px;
+}
+
+.heart-button {
+  border: none;
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 27px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.heart-button.liked {
+  color: white;
+}
+
+.heart-button:hover {
+  transform: scale(1.1);
+}
+
+
+.reviews-section {
+  margin-top: 34px;
+}
+
+.reviews-title {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.reviews-title span {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.reviews-title h3 {
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.write-review {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  margin-bottom: 28px;
+}
+
+.write-review textarea {
+  flex: 1;
+  min-height: 85px;
+
+  resize: vertical;
+
+  padding: 12px 14px;
+
+  border: 2px solid white;
+  border-radius: 8px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  font-family: inherit;
+  outline: none;
+}
+
+.write-review textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.small-gradient-btn {
+  min-width: 120px;
+  height: 35px;
+
+  border: 2px solid white;
+  border-radius: 7px;
+
+  background: linear-gradient(180deg,
+      #ffbd2f 0%,
+      #ff4ac3 100%);
+
+  color: white;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.small-gradient-btn:hover {
+  opacity: 0.85;
+}
+
+.no-reviews {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.review-card {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  column-gap: 18px;
+
+  margin-bottom: 34px;
+}
+
+.review-avatar {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+  border: 3px solid white;
+
+  object-fit: cover;
+  display: block;
+
+  background: linear-gradient(135deg, #ffbd2f, #ff4ac3);
+}
+
+.review-content {
+  font-size: 14px;
+}
+
+.review-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 18px;
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  color: white;
+}
+
+.date,
+.dot {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.review-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-like-btn {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.review-like-btn.liked {
+  color: white;
+}
+
+.review-like-btn:hover {
+  transform: scale(1.1);
+}
+
+.answer-icon {
+  margin-left: 22px;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.review-stars {
+  margin-top: 8px;
+  margin-bottom: 12px;
+
+  font-size: 22px;
+  letter-spacing: -2px;
+}
+
+.review-text,
+.review-content p {
+  line-height: 1.7;
+  max-width: 850px;
+}
+
+.edit-btn {
+  margin-top: 10px;
+}
+
+.edit-review-box {
+  margin-top: 10px;
+  max-width: 850px;
+}
+
+.edit-review-box textarea {
+  width: 100%;
+  min-height: 80px;
+
+  resize: vertical;
+
+  padding: 12px;
+
+  border: 2px solid white;
+  border-radius: 8px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  font-family: inherit;
+  outline: none;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+.answer-form {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 16px;
+  max-width: 850px;
+}
+
+.answer-form input {
+  flex: 1;
+  height: 35px;
+
+  padding: 0 12px;
+
+  border: 2px solid white;
+  border-radius: 7px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  outline: none;
+}
+
+.answer-form input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.answers-list {
+  margin-top: 18px;
+  padding-left: 28px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.answer-card {
+  background: rgba(45, 49, 93, 0.55);
+  border-left: 3px solid rgba(255, 255, 255, 0.55);
+
+  padding: 10px 14px;
+  border-radius: 6px;
+
+  max-width: 850px;
+}
+
+.answer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  margin-bottom: 6px;
+
+  font-size: 13px;
+}
+
+.answer-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.answer-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.answer-card p {
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .game-hero {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+
+  .cover-area {
+    width: 215px;
+    margin: 0 auto;
+  }
+
+  .game-info {
+    padding-top: 0;
+  }
+
+  .game-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .average {
+    margin-left: 0;
+  }
+
+  .review-header {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+
+  .review-actions {
+    justify-content: flex-start;
+  }
+
+  .write-review {
+    flex-direction: column;
+  }
+
+  .write-review textarea {
+    width: 100%;
+  }
+}
+
+.review-avatar-link {
+  width: 70px;
+  height: 70px;
+
+  display: block;
+  border-radius: 50%;
+}
+
+.user-profile-link {
+  color: white;
+  text-decoration: none;
+}
+
+.user-profile-link:hover {
+  text-decoration: underline;
+}
+
+.answer-avatar-link {
+  display: inline-flex;
+  border-radius: 50%;
+}
+
+.answer-avatar-link {
+  width: 35px;
+  height: 35px;
+
+  display: inline-flex;
+  border-radius: 50%;
+}
+
+.answer-avatar {
+  width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+  border: 2px solid white;
+
+  object-fit: cover;
+  display: block;
+
+  background: linear-gradient(135deg, #ffbd2f, #ff4ac3);
+}

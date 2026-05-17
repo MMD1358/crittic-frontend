@@ -1,0 +1,17 @@
+footer {
+  height: 47px;
+  background: rgba(46, 51, 65, 0.85);
+  color: black;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

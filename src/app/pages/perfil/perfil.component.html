@@ -1,0 +1,281 @@
+<div class="page">
+    <app-header></app-header>
+
+    <main class="profile-main" *ngIf="profile">
+        <section class="profile-header">
+            <div class="profile-avatar-wrapper">
+                <img class="profile-avatar" [src]="getProfileImageUrl()" [alt]="profile.username">
+
+                <label class="avatar-edit-btn" *ngIf="profile.ownProfile" title="Change profile picture">
+                    ✎
+                    <input type="file" accept="image/*" (change)="onProfileImageSelected($event)">
+                </label>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-top">
+                    <h2>&#64;{{ profile.username }}</h2>
+
+                    <button class="follow-btn" type="button" *ngIf="!profile.ownProfile" (click)="toggleFollow()">
+                        {{ profile.followedByCurrentUser ? '-' : '+' }}
+                    </button>
+
+                    <div class="counter-card">
+                        Followers {{ profile.followersCount || 0 }}
+                    </div>
+
+                    <div class="counter-card">
+                        Following {{ profile.followingCount || 0 }}
+                    </div>
+
+                    <button class="icon-btn" type="button" *ngIf="profile.ownProfile" (click)="startEditProfile()">
+                        ✎
+                    </button>
+
+                    <button class="icon-btn" type="button" *ngIf="!profile.ownProfile" (click)="startChat()">
+                        💬
+                    </button>
+                </div>
+
+                <div class="about-card" *ngIf="!editingDescription">
+                    <p>
+                        {{ profile.description || 'This user has not written a description yet.' }}
+                    </p>
+                </div>
+
+                <div class="about-card edit-about-card" *ngIf="editingDescription">
+                    <textarea [(ngModel)]="editedDescription" name="editedDescription"
+                        placeholder="Write something about yourself..."></textarea>
+
+                    <div class="edit-profile-actions">
+                        <button type="button" class="small-gradient-btn" (click)="saveProfile()">
+                            Save
+                        </button>
+
+                        <button type="button" class="small-gradient-btn" (click)="cancelEditProfile()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="profile-content">
+            <div class="left-panel">
+                <div class="tabs">
+                    <button type="button" [class.active]="activeSection === 'favorites'"
+                        (click)="setSection('favorites')">
+                        Favorite games
+                    </button>
+
+                    <button type="button" [class.active]="activeSection === 'reviews'" (click)="setSection('reviews')">
+                        Reviews
+                    </button>
+                </div>
+
+                <div class="tab-content" *ngIf="activeSection === 'favorites'">
+                    <p class="empty-message" *ngIf="favorites.length === 0">
+                        This user has no favorite games yet.
+                    </p>
+
+                    <article class="favorite-game" *ngFor="let game of favorites">
+                        <img [src]="getGameImageUrl(game)" [alt]="game.title">
+
+                        <div>
+                            <h3>{{ game.title }}</h3>
+
+                            <div class="game-row">
+                                <span class="stars">{{ getStars(game.averageRating) }}</span>
+                                <span class="dot">•</span>
+                                <span class="muted">{{ game.releaseDate }}</span>
+                            </div>
+
+                            <p>
+                                {{ game.description || 'No description available.' }}
+                            </p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="tab-content" *ngIf="activeSection === 'reviews'">
+                    <p class="empty-message" *ngIf="reviews.length === 0">
+                        This user has not written any reviews yet.
+                    </p>
+
+                    <article class="profile-review" *ngFor="let review of reviews">
+                        <h3>
+                            Review for {{ review.videogameTitle }}
+                        </h3>
+
+                        <div class="game-row">
+                            <span class="stars">{{ getStars(review.rating) }}</span>
+                            <span class="dot">•</span>
+                            <span class="muted">{{ formatDateTime(review.createdAt) }}</span>
+                        </div>
+
+                        <p>
+                            {{ review.content }}
+                        </p>
+
+                        <div class="review-footer">
+                            <span>Likes: {{ review.likesCount || 0 }}</span>
+                            <span class="dot">•</span>
+                            <span>Answers: {{ review.answersCount || 0 }}</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="comments-title">
+                    <h3>Profile comments</h3>
+                    <span>💬</span>
+                </div>
+
+                <form class="write-profile-comment" (ngSubmit)="sendProfileComment()">
+                    <input type="text" placeholder="Write a comment..." [(ngModel)]="newProfileComment"
+                        name="newProfileComment">
+
+                    <button type="submit" class="small-gradient-btn">
+                        Reply
+                    </button>
+                </form>
+
+                <p class="empty-message" *ngIf="profileComments.length === 0">
+                    There are no profile comments yet.
+                </p>
+
+                <article class="profile-comment-card" *ngFor="let comment of profileComments">
+                    <a class="profile-comment-avatar-link" [routerLink]="['/perfil', comment.authorUsername]">
+                        <img class="profile-comment-avatar" [src]="getUserImageUrl(comment.authorImage)"
+                            [alt]="comment.authorUsername">
+                    </a>
+
+                    <div class="profile-comment-content">
+                        <div class="profile-comment-header">
+                            <div class="profile-comment-user">
+                                <a class="username user-profile-link"
+                                    [routerLink]="['/perfil', comment.authorUsername]">
+                                    &#64;{{ comment.authorUsername }}
+                                </a>
+                                <span class="dot">•</span>
+                                <span class="muted">{{ formatDateTime(comment.createdAt) }}</span>
+                            </div>
+
+                            <div class="profile-comment-actions">
+                                <button type="button" class="like-btn" [class.liked]="comment.likedByCurrentUser"
+                                    (click)="toggleCommentLike(comment)">
+                                    ♥
+                                </button>
+
+                                <span>Likes: {{ comment.likesCount || 0 }}</span>
+
+                                <span class="answer-icon">💬</span>
+                                <span>Answers: {{ comment.replies?.length || 0 }}</span>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!comment.editing">
+                            <p class="profile-comment-text">
+                                {{ comment.content }}
+                            </p>
+
+                            <button type="button" class="small-gradient-btn edit-btn" *ngIf="comment.ownComment"
+                                (click)="startEditComment(comment)">
+                                Edit
+                            </button>
+                        </div>
+
+                        <div class="edit-comment-box" *ngIf="comment.editing">
+                            <textarea [(ngModel)]="comment.editedContent"
+                                name="edit-comment-{{ comment.profileCommentId }}"></textarea>
+
+                            <div class="edit-actions">
+                                <button type="button" class="small-gradient-btn" (click)="saveEditComment(comment)">
+                                    Save
+                                </button>
+
+                                <button type="button" class="small-gradient-btn" (click)="cancelEditComment(comment)">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                        <form class="profile-reply-form" (ngSubmit)="sendReply(comment)">
+                            <input type="text" placeholder="Write an answer..." [(ngModel)]="comment.newReply"
+                                name="reply-{{ comment.profileCommentId }}">
+
+                            <button type="submit" class="small-gradient-btn">
+                                Reply
+                            </button>
+                        </form>
+
+                        <div class="profile-replies-list" *ngIf="comment.replies && comment.replies.length > 0">
+                            <div class="profile-reply-card" *ngFor="let reply of comment.replies">
+                                <div class="profile-reply-header">
+                                    <div class="profile-reply-user">
+                                        <a class="profile-reply-avatar-link"
+                                            [routerLink]="['/perfil', reply.authorUsername]">
+                                            <img [src]="getUserImageUrl(reply.authorImage)"
+                                                [alt]="reply.authorUsername">
+                                        </a>
+
+                                        <a class="username user-profile-link"
+                                            [routerLink]="['/perfil', reply.authorUsername]">
+                                            &#64;{{ reply.authorUsername }}
+                                        </a>
+                                        <span class="dot">•</span>
+                                        <span class="muted">{{ formatDateTime(reply.createdAt) }}</span>
+                                    </div>
+
+                                    <div class="profile-reply-actions">
+                                        <button type="button" class="like-btn" [class.liked]="reply.likedByCurrentUser"
+                                            (click)="toggleCommentLike(reply)">
+                                            ♥
+                                        </button>
+
+                                        <span>Likes: {{ reply.likesCount || 0 }}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!reply.editing">
+                                    <p class="profile-comment-text">
+                                        {{ reply.content }}
+                                    </p>
+
+                                    <button type="button" class="small-gradient-btn edit-btn" *ngIf="reply.ownComment"
+                                        (click)="startEditComment(reply)">
+                                        Edit
+                                    </button>
+                                </div>
+
+                                <div class="edit-comment-box" *ngIf="reply.editing">
+                                    <textarea [(ngModel)]="reply.editedContent"
+                                        name="edit-reply-{{ reply.profileCommentId }}"></textarea>
+
+                                    <div class="edit-actions">
+                                        <button type="button" class="small-gradient-btn"
+                                            (click)="saveEditComment(reply)">
+                                            Save
+                                        </button>
+
+                                        <button type="button" class="small-gradient-btn"
+                                            (click)="cancelEditComment(reply)">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <main class="profile-main" *ngIf="!profile">
+        <p class="empty-message">Loading profile...</p>
+    </main>
+
+    <app-footer></app-footer>
+</div>

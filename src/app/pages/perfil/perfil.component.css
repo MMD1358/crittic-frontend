@@ -1,0 +1,687 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 10, 30, 0.20) 0%,
+      rgba(7, 12, 40, 0.70) 25%,
+      #070b2f 42%,
+      #070b2f 100%
+    ),
+    url('../../../assets/background.png');
+
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #070b2f;
+
+  color: white;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-main {
+  flex: 1;
+  padding: 18px 24px 80px;
+}
+
+.profile-header {
+  display: grid;
+  grid-template-columns: 155px 1fr;
+  gap: 18px;
+
+  padding-bottom: 28px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.profile-avatar-wrapper {
+  width: 150px;
+  height: 150px;
+
+  position: relative;
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+
+  object-fit: cover;
+  border-radius: 50%;
+
+  border: 4px solid white;
+  padding: 4px;
+  background: white;
+
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+}
+
+.avatar-edit-btn {
+  width: 38px;
+  height: 38px;
+
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid white;
+  border-radius: 50%;
+
+  background: linear-gradient(
+    180deg,
+    #ffbd2f 0%,
+    #ff4ac3 100%
+  );
+
+  color: white;
+  font-size: 21px;
+  cursor: pointer;
+
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+}
+
+.avatar-edit-btn:hover {
+  transform: scale(1.08);
+}
+
+.avatar-edit-btn input {
+  display: none;
+}
+
+.profile-info {
+  min-width: 0;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+.profile-top h2 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.follow-btn {
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  background: transparent;
+  color: #00ff66;
+
+  font-size: 38px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.counter-card {
+  min-width: 140px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(45, 49, 93, 0.72);
+  font-size: 21px;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: white;
+
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.about-card {
+  max-width: 100%;
+  min-height: 120px;
+
+  background: rgba(45, 49, 93, 0.45);
+  padding: 12px 10px;
+
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.edit-about-card textarea {
+  width: 100%;
+  min-height: 90px;
+
+  resize: vertical;
+
+  padding: 12px;
+
+  border: 2px solid white;
+  border-radius: 8px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  font-family: inherit;
+  outline: none;
+}
+
+.edit-about-card textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.edit-profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  margin-top: 8px;
+}
+
+.left-panel {
+  padding-right: 16px;
+  border-right: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.right-panel {
+  padding-left: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+
+  margin-bottom: 24px;
+}
+
+.tabs button {
+  height: 32px;
+  padding: 0 12px;
+
+  border: none;
+  background: rgba(45, 49, 93, 0.72);
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  color: white;
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.favorite-game {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 16px;
+}
+
+.favorite-game img {
+  width: 118px;
+  height: 168px;
+
+  object-fit: cover;
+  border-radius: 10px;
+
+  border: 2px solid white;
+  background: white;
+}
+
+.favorite-game h3 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.game-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.stars {
+  font-size: 22px;
+  letter-spacing: -2px;
+}
+
+.favorite-game p,
+.profile-review p,
+.profile-comment-text {
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.profile-review {
+  background: rgba(45, 49, 93, 0.32);
+  padding: 14px;
+  border-radius: 6px;
+}
+
+.profile-review h3 {
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 10px;
+
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+}
+
+.empty-message {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.muted,
+.dot {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.username {
+  color: white;
+}
+
+.comments-title {
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(45, 49, 93, 0.72);
+  padding: 0 10px;
+
+  margin-bottom: 16px;
+}
+
+.comments-title h3 {
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.comments-title span {
+  font-size: 22px;
+}
+
+.write-profile-comment {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  margin-bottom: 28px;
+}
+
+.write-profile-comment input {
+  flex: 1;
+  height: 35px;
+
+  padding: 0 12px;
+
+  border: 2px solid white;
+  border-radius: 7px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  outline: none;
+}
+
+.write-profile-comment input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.profile-comment-card {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  column-gap: 18px;
+
+  margin-bottom: 34px;
+}
+
+.profile-comment-avatar-link {
+  width: 70px;
+  height: 70px;
+
+  display: block;
+  border-radius: 50%;
+}
+
+.profile-comment-avatar {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+  border: 3px solid white;
+
+  object-fit: cover;
+  display: block;
+
+  background: linear-gradient(135deg, #ffbd2f, #ff4ac3);
+}
+
+.profile-comment-content {
+  font-size: 14px;
+}
+
+.profile-comment-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 18px;
+}
+
+.profile-comment-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-comment-text {
+  margin-top: 12px;
+  max-width: 850px;
+}
+
+.like-btn {
+  border: none;
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 26px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.like-btn.liked {
+  color: white;
+}
+
+.like-btn:hover {
+  transform: scale(1.1);
+}
+
+.answer-icon {
+  margin-left: 22px;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.text-action {
+  border: none;
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: underline;
+
+  cursor: pointer;
+}
+
+.text-action:hover {
+  color: white;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 10px;
+}
+
+.profile-reply-form {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 16px;
+  max-width: 850px;
+}
+
+.profile-reply-form input {
+  flex: 1;
+  height: 35px;
+
+  padding: 0 12px;
+
+  border: 2px solid white;
+  border-radius: 7px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  outline: none;
+}
+
+.profile-reply-form input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.profile-replies-list {
+  margin-top: 18px;
+  padding-left: 28px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-reply-card {
+  background: rgba(45, 49, 93, 0.55);
+  border-left: 3px solid rgba(255, 255, 255, 0.55);
+
+  padding: 10px 14px;
+  border-radius: 6px;
+
+  max-width: 850px;
+}
+
+.profile-reply-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  margin-bottom: 6px;
+
+  font-size: 13px;
+}
+
+.profile-reply-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-reply-avatar-link {
+  width: 35px;
+  height: 35px;
+
+  display: inline-flex;
+  border-radius: 50%;
+}
+
+.profile-reply-user img {
+  width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+  border: 2px solid white;
+
+  object-fit: cover;
+}
+
+.profile-reply-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.profile-reply-card p {
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.edit-btn {
+  margin-top: 10px;
+}
+
+.edit-comment-box {
+  margin-top: 10px;
+  max-width: 850px;
+}
+
+.edit-comment-box textarea {
+  width: 100%;
+  min-height: 80px;
+
+  resize: vertical;
+
+  padding: 12px;
+
+  border: 2px solid white;
+  border-radius: 8px;
+
+  background: rgba(12, 10, 55, 0.35);
+  color: white;
+
+  font-family: inherit;
+  outline: none;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.user-profile-link {
+  color: white;
+  text-decoration: none;
+}
+
+.user-profile-link:hover {
+  text-decoration: underline;
+}
+
+.small-gradient-btn {
+  min-width: 120px;
+  height: 35px;
+
+  border: 2px solid white;
+  border-radius: 7px;
+
+  background: linear-gradient(
+    180deg,
+    #ffbd2f 0%,
+    #ff4ac3 100%
+  );
+
+  color: white;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.small-gradient-btn:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .profile-header {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-avatar-wrapper {
+    margin: 0 auto;
+  }
+
+  .profile-top {
+    flex-wrap: wrap;
+  }
+
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+
+  .left-panel {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .profile-comment-header {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+
+  .profile-comment-actions {
+    justify-content: flex-start;
+  }
+
+  .write-profile-comment {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .profile-reply-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-reply-actions {
+    justify-content: flex-start;
+  }
+}

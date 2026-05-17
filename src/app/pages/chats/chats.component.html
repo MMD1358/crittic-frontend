@@ -1,0 +1,122 @@
+<div class="page">
+  <app-header></app-header>
+
+  <main class="chats-main">
+    <aside class="recent-chats">
+      <article
+        class="recent-chat"
+        *ngFor="let conversation of conversations"
+        [class.active]="conversation.conversationId === selectedConversation?.conversationId"
+        (click)="selectConversation(conversation)"
+      >
+        <div class="recent-avatar-wrapper">
+          <a
+            [routerLink]="['/perfil', conversation.otherUsername]"
+            (click)="$event.stopPropagation()"
+          >
+            <img
+              class="recent-avatar"
+              [src]="getUserImageUrl(conversation.otherUserImage)"
+              [alt]="conversation.otherUsername"
+            >
+          </a>
+
+          <span
+            class="unread-dot"
+            *ngIf="conversation.hasUnreadMessages"
+          ></span>
+        </div>
+
+        <div class="recent-info">
+          <div class="recent-top">
+            <span class="recent-date">
+              {{ formatChatDate(conversation.lastMessageAt) }}
+            </span>
+          </div>
+
+          <a
+            class="recent-username"
+            [routerLink]="['/perfil', conversation.otherUsername]"
+            (click)="$event.stopPropagation()"
+          >
+            &#64;{{ conversation.otherUsername }}
+          </a>
+
+          <p class="recent-preview">
+            {{ conversation.lastMessage || 'No messages yet.' }}
+          </p>
+        </div>
+      </article>
+    </aside>
+
+    <section class="chat-panel" *ngIf="selectedConversation">
+      <div class="chat-messages" (scroll)="loadOlderMessages($event)">
+        <p class="loading-old" *ngIf="loadingOlderMessages">
+          Loading...
+        </p>
+
+        <div
+          class="message-row"
+          *ngFor="let message of messages"
+          [ngClass]="{
+            'my-row': isMyMessage(message),
+            'their-row': !isMyMessage(message)
+          }"
+        >
+          <a
+            class="message-avatar-link"
+            *ngIf="!isMyMessage(message)"
+            [routerLink]="['/perfil', message.senderUsername]"
+          >
+            <img
+              class="message-avatar"
+              [src]="getUserImageUrl(message.senderImage)"
+              [alt]="message.senderUsername"
+            >
+          </a>
+
+          <div
+            class="message-bubble"
+            [ngClass]="{
+              'my-message': isMyMessage(message),
+              'their-message': !isMyMessage(message)
+            }"
+          >
+            {{ message.content }}
+          </div>
+
+          <a
+            class="message-avatar-link"
+            *ngIf="isMyMessage(message)"
+            [routerLink]="['/perfil', message.senderUsername]"
+          >
+            <img
+              class="message-avatar"
+              [src]="getUserImageUrl(message.senderImage)"
+              [alt]="message.senderUsername"
+            >
+          </a>
+        </div>
+      </div>
+
+      <form class="chat-input-bar" (ngSubmit)="sendMessage()">
+        <input
+          type="text"
+          placeholder="Write here..."
+          [(ngModel)]="newMessage"
+          name="newMessage"
+        >
+
+        <button type="submit" class="send-btn" aria-label="Send message">
+          ➤
+        </button>
+      </form>
+    </section>
+
+    <section class="chat-panel empty-chat" *ngIf="!selectedConversation">
+      <p>No chats yet.</p>
+    </section>
+  </main>
+
+  <app-footer></app-footer>
+</div>

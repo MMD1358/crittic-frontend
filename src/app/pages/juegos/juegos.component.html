@@ -1,0 +1,16 @@
+<div class="page">
+  <app-header></app-header>
+
+  <main class="games-main">
+    <p class="games-count">{{ totalGames }} Games</p>
+
+    <section class="games-row">
+      <button class="game-card" *ngFor="let game of games" [routerLink]="['/juego', game.videogameId]"
+        [attr.aria-label]="game.title">
+        <img [src]="getCoverUrl(game)" [alt]="game.title">
+      </button>
+    </section>
+  </main>
+
+    <app-footer></app-footer>
+</div>
