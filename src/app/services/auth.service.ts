@@ -37,7 +37,7 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/chats`;
+  private apiUrl = environment.apiUrl;
 
   private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   loggedIn$ = this.loggedInSubject.asObservable();
@@ -45,7 +45,7 @@ export class AuthService {
   private usernameSubject = new BehaviorSubject<string | null>(this.getUsernameFromToken());
   username$ = this.usernameSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   register(data: RegisterRequest): Observable<UserDTO> {
     return this.http.post<UserDTO>(`${this.apiUrl}/register`, data);

@@ -39,7 +39,7 @@ export interface ProfileComment {
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = `${environment.apiUrl}/chats`;
+private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

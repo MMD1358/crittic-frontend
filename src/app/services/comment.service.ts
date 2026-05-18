@@ -30,12 +30,12 @@ export interface PageResponse<T> {
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = `${environment.apiUrl}/chats`;
+  private apiUrl = `${environment.apiUrl}/comments`;
 
   constructor(private http: HttpClient) { }
 
   getCommentsByReview(reviewId: number): Observable<PageResponse<Comment>> {
-    return this.http.get<PageResponse<Comment>>(`${this.apiUrl}/review/${reviewId}`);
+    return this.http.get<PageResponse<Comment>>(`${this.apiUrl}?reviewId=${reviewId}`);
   }
 
   createComment(data: {
@@ -59,5 +59,4 @@ export class CommentService {
   }) {
     return this.http.put<Comment>(`${this.apiUrl}/${commentId}`, data);
   }
-
 }

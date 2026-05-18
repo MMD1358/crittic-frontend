@@ -31,9 +31,9 @@ export interface PageResponse<T> {
   providedIn: 'root'
 })
 export class VideogameService {
-  private apiUrl = `${environment.apiUrl}/chats`;
+  private apiUrl = `${environment.apiUrl}/videogames`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getVideogames(search: string = ''): Observable<PageResponse<Videogame>> {
     const params = search ? `?search=${encodeURIComponent(search)}` : '';

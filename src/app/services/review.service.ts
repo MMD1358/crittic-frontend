@@ -28,7 +28,7 @@ export interface Review {
   providedIn: 'root'
 })
 export class ReviewService {
-  private apiUrl = `${environment.apiUrl}/chats`;
+  private apiUrl = `${environment.apiUrl}/reviews`;
 
   constructor(private http: HttpClient) { }
 
