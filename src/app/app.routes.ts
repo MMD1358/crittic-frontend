@@ -32,8 +32,12 @@ export const routes: Routes = [
     path: 'perfil/:username',
     component: PerfilComponent
   },
-  { 
-    path: 'chats', 
-    component: ChatsComponent 
+  {
+    path: 'chats',
+    component: ChatsComponent
   },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
