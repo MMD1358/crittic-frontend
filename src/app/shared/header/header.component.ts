@@ -18,8 +18,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loggedIn$ = this.authService.loggedIn$;
   username$ = this.authService.username$;
 
+  isLoggedIn = false;
   hasNewMessages = false;
+
   private unreadInterval?: number;
+
   searchText = '';
   searchResults: Videogame[] = [];
   showResults = false;
@@ -30,6 +33,59 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private chatService: ChatService
   ) { }
+
+  ngOnInit(): void {
+    this.loggedIn$.subscribe({
+      next: (loggedIn) => {
+        this.isLoggedIn = loggedIn;
+
+        if (loggedIn) {
+          this.startUnreadChecker();
+        } else {
+          this.stopUnreadChecker();
+          this.hasNewMessages = false;
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stopUnreadChecker();
+  }
+
+  startUnreadChecker(): void {
+    if (this.unreadInterval) {
+      return;
+    }
+
+    this.checkUnreadMessages();
+
+    this.unreadInterval = window.setInterval(() => {
+      this.checkUnreadMessages();
+    }, 3000);
+  }
+
+  stopUnreadChecker(): void {
+    if (this.unreadInterval) {
+      window.clearInterval(this.unreadInterval);
+      this.unreadInterval = undefined;
+    }
+  }
+
+  checkUnreadMessages(): void {
+    if (!this.isLoggedIn) {
+      return;
+    }
+
+    this.chatService.hasUnreadMessages().subscribe({
+      next: (hasUnread) => {
+        this.hasNewMessages = hasUnread;
+      },
+      error: () => {
+        this.hasNewMessages = false;
+      }
+    });
+  }
 
   onSearchChange(): void {
     const search = this.searchText.trim();
@@ -63,31 +119,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.authService.logout();
+    this.stopUnreadChecker();
+    this.hasNewMessages = false;
     this.router.navigate(['/']);
-  }
-
-  ngOnInit(): void {
-    this.checkUnreadMessages();
-
-    this.unreadInterval = window.setInterval(() => {
-      this.checkUnreadMessages();
-    }, 1000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.unreadInterval) {
-      window.clearInterval(this.unreadInterval);
-    }
-  }
-
-  checkUnreadMessages(): void {
-    this.chatService.hasUnreadMessages().subscribe({
-      next: (hasUnread) => {
-        this.hasNewMessages = hasUnread;
-      },
-      error: () => {
-        this.hasNewMessages = false;
-      }
-    });
   }
 }
