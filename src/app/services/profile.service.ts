@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Videogame } from './videogame.service';
 import { Review } from './review.service';
+import { environment } from '../../environment/environment';
 
 export interface UserProfile {
   userId: number;
@@ -38,7 +39,7 @@ export interface ProfileComment {
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = 'http://localhost:8080/api/v1';
+  private apiUrl = `${environment.apiUrl}/chats`;
 
   constructor(private http: HttpClient) { }
 

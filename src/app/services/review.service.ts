@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Comment } from './comment.service';
+import { environment } from '../../environment/environment';
 
 export interface Review {
   reviewId: number;
@@ -27,7 +28,7 @@ export interface Review {
   providedIn: 'root'
 })
 export class ReviewService {
-  private apiUrl = 'http://localhost:8080/api/v1/reviews';
+  private apiUrl = `${environment.apiUrl}/chats`;
 
   constructor(private http: HttpClient) { }
 

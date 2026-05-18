@@ -10,6 +10,7 @@ import { Videogame } from '../../services/videogame.service';
 import { Review } from '../../services/review.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../services/chat.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'app-perfil',
@@ -275,7 +276,7 @@ export class PerfilComponent implements OnInit {
   getProfileImageUrl(): string {
     if (this.profile?.image) {
       const imageName = this.profile.image.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/default-user.png';
@@ -284,7 +285,7 @@ export class PerfilComponent implements OnInit {
   getUserImageUrl(image?: string): string {
     if (image) {
       const imageName = image.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/default-user.png';
@@ -293,7 +294,7 @@ export class PerfilComponent implements OnInit {
   getGameImageUrl(game: Videogame): string {
     if (game.image) {
       const imageName = game.image.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/game-placeholder.png';
@@ -344,20 +345,20 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
-  
-  startChat(): void {
-  if (!this.profile || this.profile.ownProfile) {
-    return;
-  }
 
-  this.chatService.startChat(this.profile.username).subscribe({
-    next: () => {
-      this.router.navigate(['/chats']);
-    },
-    error: (error) => {
-      console.error('Error starting chat:', error);
-      alert('You must log in to start a chat.');
+  startChat(): void {
+    if (!this.profile || this.profile.ownProfile) {
+      return;
     }
-  });
-}
+
+    this.chatService.startChat(this.profile.username).subscribe({
+      next: () => {
+        this.router.navigate(['/chats']);
+      },
+      error: (error) => {
+        console.error('Error starting chat:', error);
+        alert('You must log in to start a chat.');
+      }
+    });
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
+import { environment } from '../../../environment/environment';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { AuthService } from '../../services/auth.service';
@@ -246,7 +246,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   getUserImageUrl(image?: string): string {
     if (image) {
       const imageName = image.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/default-user.png';

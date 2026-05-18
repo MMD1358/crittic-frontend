@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment/environment';
 
 export interface Videogame {
   videogameId: number;
@@ -30,7 +31,7 @@ export interface PageResponse<T> {
   providedIn: 'root'
 })
 export class VideogameService {
-  private apiUrl = 'http://localhost:8080/api/v1/videogames';
+  private apiUrl = `${environment.apiUrl}/chats`;
 
   constructor(private http: HttpClient) {}
 

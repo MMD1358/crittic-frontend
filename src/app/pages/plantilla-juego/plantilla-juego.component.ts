@@ -8,6 +8,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'app-plantilla-juego',
@@ -91,7 +92,7 @@ export class PlantillaJuegoComponent implements OnInit {
   getCoverUrl(): string {
     if (this.game?.image) {
       const imageName = this.game.image.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/game-placeholder.png';
@@ -100,7 +101,7 @@ export class PlantillaJuegoComponent implements OnInit {
   getUserImageUrl(review: Review): string {
     if (review.userImage) {
       const imageName = review.userImage.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/default-user.png';
@@ -335,7 +336,7 @@ export class PlantillaJuegoComponent implements OnInit {
   getCommentUserImageUrl(comment: Comment): string {
     if (comment.userImage) {
       const imageName = comment.userImage.replace('/images/', '');
-      return `http://localhost:8080/api/images/${imageName}`;
+      return `${environment.imageUrl}/${imageName}`;
     }
 
     return '../../../assets/default-user.png';
